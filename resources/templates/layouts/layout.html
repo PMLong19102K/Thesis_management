@@ -1,0 +1,59 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:fragment="main-fragment (title, otherStaticResources, leftMenu, topMenu, mainContent, footer)">
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="">
+<meta name="author" content="">
+<title th:replace="${title}">Page 1 Title</title>
+
+
+<link th:href="@{/static/vendor/fontawesome-free/css/all.min.css}"
+	rel="stylesheet" type="text/css">
+<link
+	href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+	rel="stylesheet">
+
+<!-- Custom styles for this template-->
+<link th:href="@{/static/css/sb-admin-2.min.css}" rel="stylesheet">
+
+<!-- Other javascript, css source files -->
+<th:block th:replace="${otherStaticResources} ?: ~{}"></th:block>
+
+</head>
+<body id="page-top">
+	<div id="wrapper">
+		<div th:insert="${leftMenu} ?: ~{}"></div>
+
+		<div id="content-wrapper" class="d-flex flex-column">
+			<div id="content">
+				<div th:insert="${topMenu} ?: ~{}"></div>
+				
+				<article th:insert="${mainContent} ?: ~{}"></article>
+			</div>
+
+			<footer th:insert="${footer} ?: ~{}" class="sticky-footer bg-white"></footer>
+		</div>
+	</div>
+
+	<script th:src="@{/static/vendor/jquery/jquery.min.js}"></script>
+	<script th:src="@{/static/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+
+	<!-- Core plugin JavaScript-->
+	<script th:src="@{/static/vendor/jquery-easing/jquery.easing.min.js}"></script>
+
+	<!-- Custom scripts for all pages-->
+	<script th:src="@{/static/js/sb-admin-2.min.js}"></script>
+
+	<!-- Page level plugins -->
+	<script th:src="@{/static/vendor/chart.js/Chart.min.js}"></script>
+
+	<!-- Page level custom scripts -->
+	<script th:src="@{/static/js/demo/chart-area-demo.js}"></script>
+	<script th:src="@{/static/js/demo/chart-pie-demo.js}"></script>
+</body>
+</html>

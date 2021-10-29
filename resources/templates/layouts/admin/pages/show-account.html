@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+
+<!--  main-fragment (title, otherStaticResources, leftMenu, topMenu, mainContent, footer)  -->
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{layouts/layout :: main-fragment(  
+                                                ~{::title},
+                                                ~{:: #home-static-resources},
+                                                ~{:: #left-menu},
+                                                ~{:: #top-header},
+                                                ~{:: #home-main-content},  
+                                                ~{:: #home-footer}
+                                               )}">
+
+<head>
+<title>Dash board Admin</title>
+</head>
+<body>
+
+	<div id="top-header"
+		th:replace="~{layouts/fragments/top-menu :: top-menu}"></div>
+
+	<div id="left-menu"
+		th:replace="~{layouts/fragments/left-menu :: nav-common}"></div>
+
+	<div id="home-main-content" class="container-fluid">
+		<div class="d-sm-flex align-items-center justify-content-between mb-4">
+			<h1 class="h3 mb-0 text-gray-800">Accounts</h1>
+		</div>
+
+		<!-- Content Row -->
+		<div class="row">
+
+			<!-- Earnings (Monthly) Card Example -->
+			<div class="col-xl-12 col-md-12 mb-12">
+				<div class="table-responsive">
+					<table class="table table-bordered">
+						<tr>
+							<th>Email</th>
+							<th>Full Name</th>
+							<th>Role</th>
+							<th>Action</th>
+						</tr>
+
+						<tr th:each="acc : ${accountInfos}">
+							<td th:utext="${acc.email}"></td>
+							<td th:utext="${acc.email}"></td>
+							<td th:utext="${acc.roleName}"></td>
+							<td>
+								<button type="button"
+									th:onclick="|window.location.href='@{/admin/update(accId=${acc.id})}'|"
+									class="btn btn-warning btn-user btn-block">Update</button>
+								<button type="button"
+									th:onclick="|window.location.href='@{/admin/delete(accId=${acc.id},
+									accountRoleId=${acc.accountRoleId})}'|"
+									class="btn btn-danger btn-user btn-block"
+									th:if="${acc.roleCode != 'ROLE_ADMIN'}">Delete</button>
+							</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="home-footer"
+		th:replace="~{layouts/fragments/footer :: copyright}"></div>
+
+</body>
+</html>

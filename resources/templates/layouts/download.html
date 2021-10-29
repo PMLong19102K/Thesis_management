@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+
+<!--  main-fragment (title, otherStaticResources, leftMenu, topMenu, mainContent, footer)  -->
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{layouts/layout :: main-fragment(  
+                                                ~{::title},
+                                                ~{:: #home-static-resources},
+                                                ~{:: #left-menu},
+                                                ~{:: #top-header},
+                                                ~{:: #home-main-content},  
+                                                ~{:: #home-footer}
+                                               )}">
+
+<head>
+<title>Dash board Admin</title>
+</head>
+<body>
+
+	<div id="top-header"
+		th:replace="~{layouts/fragments/top-menu :: top-menu}"></div>
+
+	<div id="left-menu"
+		th:replace="~{layouts/fragments/left-menu :: nav-common}"></div>
+
+	<div id="home-main-content" class="container-fluid">
+		<div class="d-sm-flex align-items-center justify-content-between mb-4">
+			<h1 class="h3 mb-0 text-gray-800">Accounts</h1>
+		</div>
+
+		<!-- Content Row -->
+		<div class="row">
+
+			<!-- Earnings (Monthly) Card Example -->
+			<div class="col-xl-12 col-md-12 mb-12">
+				<div class="table-responsive">
+					<table class="table table-bordered">
+						<tr>
+							<th>File Name</th>
+							<th>Create At</th>
+							<th>Update By</th>
+							<th>Action</th>
+						</tr>
+
+						<tr th:each="file : ${files}">
+							<td th:utext="${file.url}"></td>
+							<td
+								th:text="${#dates.format(file.createDate, 'dd-MM-yyyy HH:mm')}"></td>
+							<td th:utext="${file.account.fullName}"></td>
+							<td>
+								<a th:href="|@{/download-file(fileId=${file.id})}|"
+									class="btn btn-warning btn-user btn-block">Download</a>
+							</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="home-footer"
+		th:replace="~{layouts/fragments/footer :: copyright}"></div>
+
+</body>
+</html>

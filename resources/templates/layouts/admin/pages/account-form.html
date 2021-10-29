@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+
+<!--  main-fragment (title, otherStaticResources, leftMenu, topMenu, mainContent, footer)  -->
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{layouts/layout :: main-fragment(  
+                                                ~{::title},
+                                                ~{:: #home-static-resources},
+                                                ~{:: #left-menu},
+                                                ~{:: #top-header},
+                                                ~{:: #home-main-content},  
+                                                ~{:: #home-footer}
+                                               )}">
+
+<head>
+<title>Dash board Admin</title>
+</head>
+<body>
+
+	<div id="top-header"
+		th:replace="~{layouts/fragments/top-menu :: top-menu}"></div>
+
+	<div id="left-menu"
+		th:replace="~{layouts/fragments/left-menu :: nav-common}"></div>
+
+	<div id="home-main-content" class="container-fluid">
+		<!-- Content Row -->
+		<div class="row">
+			<div class="col-lg-4 col-md-3 d-none d-lg-block"></div>
+			<div class="col-lg-4 col-md-6">
+				<div class="p-5">
+					<div class="text-center">
+						<h1 class="h4 text-gray-900 mb-4"
+							th:text="${action=='add'} ? 'Create an Account' : 'Update an Account'"></h1>
+					</div>
+					<form class="user" th:action="@{/admin/result}"
+						th:object="${account}" method="post">
+
+						<input type="text" th:field="*{id}" hidden="true"
+							th:value="${account.id}" th:if="${action=='update'}" /> <input
+							type="text" th:field="*{accountRoleId}" hidden="true"
+							th:value="${account.accountRoleId}" th:if="${action=='update'}" />
+
+						<div class="form-group">
+
+							<input type="email" class="form-control form-control-user"
+								id="exampleInputEmail" placeholder="Email Address"
+								th:field="*{email}" th:value="${account.email}"
+								th:if="${action=='add'}" /> <input type="email"
+								class="form-control form-control-user" id="exampleInputEmail"
+								placeholder="Email Address" th:field="*{email}" readonly
+								th:value="${account.email}" th:if="${action=='update'}" />
+						</div>
+
+						<div class="form-group">
+							<input type="password" class="form-control form-control-user"
+								id="exampleInputPassword" placeholder="Password"
+								th:field="*{encrytedPassword}">
+						</div>
+
+						<div class="form-group">
+							<input type="text" class="form-control form-control-user"
+								id="exampleFirstName" placeholder="Full Name"
+								th:field="*{fullName}" th:value="${account.fullName}">
+						</div>
+
+						<div class="form-group">
+							<select th:field="*{roleCode}" class="form-control"
+								style="border-radius: 10rem"
+								th:if="${account.roleCode != 'ROLE_ADMIN'}">
+								<option th:each="role : ${roles}" th:value="${role.roleCode}"
+									th:utext="${role.roleName}"></option>
+							</select>
+							
+							<input type="text"
+								class="form-control form-control-user"
+								th:field="*{roleCode}" readonly
+								th:value="${account.roleCode}" th:if="${account.roleCode == 'ROLE_ADMIN'}" />
+						</div>
+						<div class="form-group row">
+							<div class="col-sm-4"></div>
+							<div class="col-sm-4">
+								<button type="submit" class="btn btn-primary btn-user btn-block"
+									th:text="${action=='add'} ? 'Create' : 'Update'"></button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+			<div class="col-lg-4 col-md-3"></div>
+		</div>
+	</div>
+	<div id="home-footer"
+		th:replace="~{layouts/fragments/footer :: copyright}"></div>
+
+</body>
+</html>
